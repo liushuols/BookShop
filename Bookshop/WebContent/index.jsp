@@ -16,7 +16,7 @@
 		<style>
 			table{  border-collapse:collapse;  }   
 			.td1 td{font-weight:bold;font-size:20px} 
-			.fenye{height:80px;width:750px;margin-top:100px;}
+			.fenye{height:80px;width:800px;margin-top:100px;}
 			.fenye2{font-size:20px}
 			.sub_mingxing{width:300px;height:400px;margin-left:20px;}
 			.aa a:hover{color:#FF8800;}
@@ -148,7 +148,7 @@
 		<table class="fenye">
        <tr>
             <td colspan="6" align="center"  class="fenye2">共&emsp;${page.totalRecords}&emsp;条记录 &emsp;共&emsp;${page.totalPages}&emsp;页 &emsp;当前第&emsp;${page.pageNo}&emsp;页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;             
-                <a href="<%=request.getContextPath()%>/book/list?pageNo=${page.topPageNo}"><input type="button" name="fristPage" value="首页" class="fenye2"/></a>
+                <a href="<%=request.getContextPath()%>/book/list?pageNo=${page.topPageNo}"><input type="button" name="fristPage" value="首页" class="fenye2"/></a>&nbsp;&nbsp;
                 <c:choose>
                   <c:when test="${page.pageNo!=1}">             
                       <a href="<%=request.getContextPath()%>/book/list?pageNo=${page.previousPageNo }"><input type="button" name="previousPage" value="上一页" class="fenye2"/></a>               
@@ -156,7 +156,7 @@
                   <c:otherwise>   
                       <input type="button" disabled="disabled" name="previousPage" value="上一页" class="fenye2"/>       
                   </c:otherwise>
-                </c:choose>
+                </c:choose>&nbsp;&nbsp;
                 <c:choose>
                   <c:when test="${page.pageNo != page.totalPages}">
                     <a href="<%=request.getContextPath()%>/book/list?pageNo=${page.nextPageNo }"><input type="button" name="nextPage" value="下一页" class="fenye2"/></a>
@@ -164,7 +164,7 @@
                   <c:otherwise>    
                       <input type="button" disabled="disabled" name="nextPage" value="下一页" class="fenye2"/>
                   </c:otherwise>
-                </c:choose>
+                </c:choose>&nbsp;&nbsp;
                 <a href="<%=request.getContextPath()%>/book/list?pageNo=${page.bottomPageNo}"><input type="button" name="lastPage" value="尾页" class="fenye2"/></a>
             </td>
         </tr>

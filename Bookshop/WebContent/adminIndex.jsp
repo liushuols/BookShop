@@ -75,11 +75,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <img class="left-icon-child" src="<%=basePath %>/images/32/4957_customers.png" /><span class="left-body"> 角色管理</span>
 								</a>
                             </div>
-                            <div class="accordion-inner">
-                                <a href="<%=basePath %>/../selectuser.do">
-                                <img class="left-icon-child" src="<%=basePath %>/images/32/4992_user.png" /><span class="left-body"> 用户管理</span>
-								</a>
-                            </div>
                             
                             <div class="accordion-inner">
                                 <a href="<%=basePath %>/Views/add.jsp">

@@ -19,6 +19,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title></title>
     <link href="<%=basePath %>/styles/Common.css" rel="stylesheet" />
     <link href="<%=basePath %>/styles/Index2.css" rel="stylesheet" />
+    
+    <style type="text/css">
+    	.intro{width:300px;}
+    	.change{line-height:20px;}
+    </style>
 </head>
 <body>
     <div class="container-fluid">
@@ -29,7 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <table class="table table-condensed table-bordered table-hover tab" align="center">
                         <thead>
                             <tr>
-                                <th>书名</th>
+                                <th>图书名称</th>
                                 <th>类别</th>
                                 <th>简介</th>
                                 <th>价格</th>
@@ -39,13 +44,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </thead>
                         <c:forEach var="book" items="${detailList1 }">
                         	<tbody id="tbody">
-                        		<tr align="center">
-                        		<th><img src="${book.bookimg1 }" alt="无法显示该图片" width="50px" height="90px"/></th>
+                        		<tr align="center" class="change">
+                        		<th><img src="${book.bookimg1 }" alt="无法显示该图片" width="100px" height="150px"/><br><br>${book.bookname }</th>
                         		<th>${book.book.bookType.typename}</th>
-                        		<th>${book.introduce}</th>
+                        		<th class="intro">${book.introduce}</th>
                         		<th>${book.bookprice}</th>
                         		<th>${book.bookpublisher}</th>
-                        		<th><a href="<%=basePath %>/../update.do?bookid=${book.bookid }">修改</a>|<a href="<%=basePath %>/../delete.do?bookid=${book.bookid }">删除</a></th>  
+                        		<th style="font-size:25px"><a href="<%=basePath %>/../update.do?bookid=${book.bookid }">修改</a>&emsp;|&emsp;<a href="<%=basePath %>/../delete.do?bookid=${book.bookid }">删除</a></th>  
                         		<tr>                           
                         	</tbody>
                         </c:forEach>

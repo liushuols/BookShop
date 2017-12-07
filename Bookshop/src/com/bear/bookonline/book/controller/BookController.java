@@ -44,10 +44,10 @@ public class BookController {
 	}
 	
 	@RequestMapping("/list1")
-	public String findAll1(Model model) {
+	public String findAll1(HttpSession session) {
 		List<Orderdetail> detailList1 = this.bookServiceImpl.findAll1();
-		model.addAttribute("detailList1", detailList1);
-		return "adminList";
+		session.setAttribute("detailList1", detailList1);
+		return "adminIndex";
 	}
 	
 	
@@ -72,21 +72,20 @@ public class BookController {
 		User user = (User) session.getAttribute("user");
 		this.bookServiceImpl.saveShopping(user, id);
 		
-		
 		Set<Order> shoppingCartSet = (Set<Order>)session.getAttribute("shoppingcart");
 		session.setAttribute("shoppingCartSet", shoppingCartSet);
 		
-		for(Order o : shoppingCartSet) {
-			int size = o.getOrderdetailSet().size();
+		for(Order order : shoppingCartSet) {
+			int size = order.getOrderdetailSet().size();
 			session.setAttribute("size", size);
 		}	
 		
-		for(Order o : user.getOrderSet()) {
+		for(Order order : user.getOrderSet()) {
 			double sum = 0;
-			for(Orderdetail od : o.getOrderdetailSet()) {
+			for(Orderdetail od : order.getOrderdetailSet()) {
 				sum = sum + od.getTotalprice();
-				session.setAttribute("totalPrice",sum);
 			}
+			session.setAttribute("totalPrice",sum);
 		}
 		
 		return "redirect:list";
@@ -104,10 +103,10 @@ public class BookController {
 		User user = (User) session.getAttribute("user");
 		
 		Set<Order> orderSet = user.getOrderSet();
-		for(Order o:orderSet) {
-			for (Orderdetail od:o.getOrderdetailSet()) {
+		for(Order order:orderSet) {
+			for (Orderdetail od:order.getOrderdetailSet()) {
 				if(od.getOrderdetailid() == orderdetailid) {
-					o.getOrderdetailSet().remove(od);
+					order.getOrderdetailSet().remove(od);
 				}
 			}
 		}
@@ -118,14 +117,14 @@ public class BookController {
 		Set<Order> shoppingCartSet = user.getOrderSet();
 		session.setAttribute("shoppingCartSet", shoppingCartSet);
 
-		for(Order o : user.getOrderSet()) {
-			int size = o.getOrderdetailSet().size();
+		for(Order order : user.getOrderSet()) {
+			int size = order.getOrderdetailSet().size();
 			session.setAttribute("size", size);
 		}	
 		
-		for(Order o : user.getOrderSet()) {
+		for(Order order : user.getOrderSet()) {
 			double sum = 0;
-			for(Orderdetail od : o.getOrderdetailSet()) {
+			for(Orderdetail od : order.getOrderdetailSet()) {
 				sum = sum + od.getTotalprice();
 				session.setAttribute("totalPrice",sum);
 			}
@@ -140,14 +139,14 @@ public class BookController {
 		Set<Order> orderSet = user.getOrderSet();
 		session.setAttribute("shoppingCartSet", orderSet);
 		
-		for(Order o : user.getOrderSet()) {
-			int size = o.getOrderdetailSet().size();
+		for(Order order : user.getOrderSet()) {
+			int size = order.getOrderdetailSet().size();
 			session.setAttribute("size", size);
 		}	
 		
-		for(Order o : user.getOrderSet()) {
+		for(Order order : user.getOrderSet()) {
 			double sum = 0;
-			for(Orderdetail od : o.getOrderdetailSet()) {
+			for(Orderdetail od : order.getOrderdetailSet()) {
 				sum = sum + od.getTotalprice();
 				session.setAttribute("totalPrice",sum);
 			}

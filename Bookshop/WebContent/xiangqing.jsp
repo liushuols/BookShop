@@ -120,7 +120,7 @@
 	</div>
 	
 	<div class="jieshao mt20 w">
-		<div class="left fl" style="width:400px;height:400px"><img src="${bd.bookimg1 }"></div>
+		<div class="left fl" style="width:400px;height:400px"><img src="../${bd.bookimg1 }"></div>
 		<div class="right fr">
 			<div class="h3 ml20 mt20">${bd.bookname }</div>
 			<div class="jianjie mr40 ml20 mt10">${bd.introduce }</div>
