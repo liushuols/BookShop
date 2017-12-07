@@ -19,6 +19,7 @@ public class Bookdetail {
 	private Integer bookcount;
 	private double bookprice;
 	private String introduce;
+	private String bookpublisher;
 	private String bookimg1;
 	private String bookimg2;
 	private String bookimg3;
@@ -58,6 +59,12 @@ public class Bookdetail {
 	}
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
+	}
+	public String getBookpublisher() {
+		return bookpublisher;
+	}
+	public void setBookpublisher(String bookpublisher) {
+		this.bookpublisher = bookpublisher;
 	}
 	public String getBookimg1() {
 		return bookimg1;

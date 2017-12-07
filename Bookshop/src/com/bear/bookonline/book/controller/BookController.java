@@ -1,7 +1,7 @@
 package com.bear.bookonline.book.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -18,8 +17,11 @@ import com.bear.bookonline.book.service.BookServiceImpl;
 import com.bear.bookonline.entity.Book;
 import com.bear.bookonline.entity.BookType;
 import com.bear.bookonline.entity.Bookdetail;
+import com.bear.bookonline.entity.CartItem;
+import com.bear.bookonline.entity.Order;
+import com.bear.bookonline.entity.Orderdetail;
 import com.bear.bookonline.entity.Page;
-import com.bear.bookonline.entity.Shoppingcart;
+import com.bear.bookonline.entity.User;
 
 @Controller
 @RequestMapping("book")
@@ -29,7 +31,7 @@ public class BookController {
 	private BookServiceImpl bookServiceImpl;
 	
 	@RequestMapping("/list")
-	public String findAll(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap) {   
+	public String findAll(HttpServletRequest request,HttpServletResponse response,HttpSession session) {   
 	    String pageNo = request.getParameter("pageNo");
 	    if (pageNo == null) {
 	        pageNo = "1";
@@ -37,9 +39,17 @@ public class BookController {
 	    Page page = bookServiceImpl.queryForPage(Integer.valueOf(pageNo), 3);
 	    request.setAttribute("page", page);
 	    List<Book> list = page.getList();
-	    modelMap.put("list", list);
+	    session.setAttribute("list", list);
 	    return "index";
 	}
+	
+	@RequestMapping("/list1")
+	public String findAll1(Model model) {
+		List<Orderdetail> detailList1 = this.bookServiceImpl.findAll1();
+		model.addAttribute("detailList1", detailList1);
+		return "adminList";
+	}
+	
 	
 	@RequestMapping("/findByTypeid")
 	public String findByTypeid(Model model,@RequestParam("typeid") int typeid) {
@@ -59,34 +69,90 @@ public class BookController {
 	
 	@RequestMapping("/addShoppingcart")
 	public String findByBookid(Model model,HttpSession session,@RequestParam("bookid") int id) {
-		List shoppingCartList = (List)session.getAttribute("shoppingCartList");
-		if(shoppingCartList == null) {
-			shoppingCartList = new ArrayList<>();
+		User user = (User) session.getAttribute("user");
+		this.bookServiceImpl.saveShopping(user, id);
+		
+		
+		Set<Order> shoppingCartSet = (Set<Order>)session.getAttribute("shoppingcart");
+		session.setAttribute("shoppingCartSet", shoppingCartSet);
+		
+		for(Order o : shoppingCartSet) {
+			int size = o.getOrderdetailSet().size();
+			session.setAttribute("size", size);
+		}	
+		
+		for(Order o : user.getOrderSet()) {
+			double sum = 0;
+			for(Orderdetail od : o.getOrderdetailSet()) {
+				sum = sum + od.getTotalprice();
+				session.setAttribute("totalPrice",sum);
+			}
 		}
-		Bookdetail bd = this.bookServiceImpl.findByDetailid(id);
-		shoppingCartList.add(bd);
-		session.setAttribute("shoppingCartList", shoppingCartList);
-		return "xiangqing";
+		
+		return "redirect:list";
 	}
 	
 	@RequestMapping("/findByName")
-	public String selectBook(Model model,@RequestParam("bookname") String bookname) {
+	public String selectBook(HttpSession session,@RequestParam("bookname") String bookname) {
 		List<Bookdetail> detailList = this.bookServiceImpl.findByName(bookname);
-		model.addAttribute("detailList", detailList);
+		session.setAttribute("detailList", detailList);
 		return "xiangqing";
 	}
 	
 	@RequestMapping("/delete")
-	public String findByBookId(@RequestParam("bookid") int bookid,HttpSession session) {
-		List<Bookdetail> shoppingCartList = (List<Bookdetail>)session.getAttribute("shoppingCartList");
-		if (shoppingCartList != null) {
-			for(int i =0;i<shoppingCartList.size();i++) {
-				if(bookid == (shoppingCartList.get(i)).getBookid()) {
-					shoppingCartList.remove(i);
+	public String findByBookId(@RequestParam("orderdetailid") int orderdetailid,HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		
+		Set<Order> orderSet = user.getOrderSet();
+		for(Order o:orderSet) {
+			for (Orderdetail od:o.getOrderdetailSet()) {
+				if(od.getOrderdetailid() == orderdetailid) {
+					o.getOrderdetailSet().remove(od);
 				}
 			}
 		}
-		session.setAttribute("shoppingCartList", shoppingCartList);
+		
+		Orderdetail ord = this.bookServiceImpl.findByOrderDetailid(orderdetailid);
+		this.bookServiceImpl.deleteByOrderDetail(ord);
+		
+		Set<Order> shoppingCartSet = user.getOrderSet();
+		session.setAttribute("shoppingCartSet", shoppingCartSet);
+
+		for(Order o : user.getOrderSet()) {
+			int size = o.getOrderdetailSet().size();
+			session.setAttribute("size", size);
+		}	
+		
+		for(Order o : user.getOrderSet()) {
+			double sum = 0;
+			for(Orderdetail od : o.getOrderdetailSet()) {
+				sum = sum + od.getTotalprice();
+				session.setAttribute("totalPrice",sum);
+			}
+		}
+		
+		return "gouwuche";
+	}
+	
+	@RequestMapping("/shopping")
+	public String findOrder(HttpSession session) {
+		User user = (User)session.getAttribute("user");
+		Set<Order> orderSet = user.getOrderSet();
+		session.setAttribute("shoppingCartSet", orderSet);
+		
+		for(Order o : user.getOrderSet()) {
+			int size = o.getOrderdetailSet().size();
+			session.setAttribute("size", size);
+		}	
+		
+		for(Order o : user.getOrderSet()) {
+			double sum = 0;
+			for(Orderdetail od : o.getOrderdetailSet()) {
+				sum = sum + od.getTotalprice();
+				session.setAttribute("totalPrice",sum);
+			}
+		}
+		
 		return "gouwuche";
 	}
 }

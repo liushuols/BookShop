@@ -1,24 +1,29 @@
 package com.bear.bookonline.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="order")
+@Table(name="orders")
 public class Order {
 	
 	private Integer orderid;
 	private String username;
 	private User user;
-	private Orderdetail orderdetail;
+	private Set<Orderdetail> orderdetailSet = new HashSet<Orderdetail>();
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -35,7 +40,7 @@ public class Order {
 		this.username = username;
 	}
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.MERGE,optional = false,fetch = FetchType.LAZY)
 	@JoinColumn(name="userid")
 	public User getUser() {
 		return user;
@@ -44,13 +49,14 @@ public class Order {
 		this.user = user;
 	}
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@PrimaryKeyJoinColumn(name="orderdetailid")
-	public Orderdetail getOrderdetail() {
-		return orderdetail;
+	@OneToMany(mappedBy="order", targetEntity=Orderdetail.class, cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	public Set<Orderdetail> getOrderdetailSet() {
+		return orderdetailSet;
 	}
-	public void setOrderdetail(Orderdetail orderdetail) {
-		this.orderdetail = orderdetail;
+	public void setOrderdetailSet(Set<Orderdetail> orderdetailSet) {
+		this.orderdetailSet = orderdetailSet;
 	}
+	
+	
 	
 }

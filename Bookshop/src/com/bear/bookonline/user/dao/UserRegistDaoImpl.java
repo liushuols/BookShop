@@ -17,11 +17,11 @@ public class UserRegistDaoImpl {
 	private SessionFactory sessionFactory;
 	
 	public List<User> findAllUser(){
-		Query q = this.sessionFactory.openSession().createQuery("from User");
+		Query q = this.sessionFactory.getCurrentSession().createQuery("from User");
 		return q.list();
 	}
 	
 	public void saveUser(User user) {
-		this.sessionFactory.openSession().save(user);
+		this.sessionFactory.getCurrentSession().save(user);
 	}
 }

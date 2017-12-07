@@ -12,10 +12,12 @@ import com.bear.bookonline.entity.Book;
 import com.bear.bookonline.entity.BookType;
 import com.bear.bookonline.entity.Bookdetail;
 import com.bear.bookonline.entity.Page;
-import com.bear.bookonline.entity.Shoppingcart;
+import com.bear.bookonline.entity.User;
+import com.bear.bookonline.entity.Cart;
+import com.bear.bookonline.entity.Orderdetail;
 
 @Service
-@Transactional(readOnly=true)
+@Transactional
 public class BookServiceImpl {
 	
 	@Resource
@@ -63,8 +65,8 @@ public class BookServiceImpl {
     	return this.bookDaoImpl.findBookDetailByBookid(bookid);
     }
     
-    public void saveShopping(Shoppingcart sc) {
-    	this.bookDaoImpl.saveShopping(sc);
+    public void saveShopping(User user,int id) {
+    	this.bookDaoImpl.saveShopping(user,id);
     }
     
     public List<Bookdetail> findByName(String bookname){
@@ -73,5 +75,17 @@ public class BookServiceImpl {
     
     public Bookdetail findByDetailid(int bookid) {
     	return this.bookDaoImpl.findByDetailid(bookid);
+    }
+    
+    public void deleteByOrderDetail(Orderdetail od) {
+    	this.bookDaoImpl.deleteByOrderDetail(od);
+    }
+    
+    public List<Orderdetail> findAll1(){
+    	return this.bookDaoImpl.findAll1();
+    }
+    
+    public Orderdetail findByOrderDetailid(int id) {
+    	return this.bookDaoImpl.findByOrderDetailid(id);
     }
 }

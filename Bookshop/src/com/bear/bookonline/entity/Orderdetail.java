@@ -1,9 +1,13 @@
 package com.bear.bookonline.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,9 +26,9 @@ public class Orderdetail {
 	private double totalprice;
 	private Order order;
 	
+	
 	@Id
-	@GeneratedValue(generator="foreign")
-	@GenericGenerator(name="foreign",strategy="foreign",parameters={@Parameter(name="property",value="order")})
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getOrderdetailid() {
 		return orderdetailid;
 	}
@@ -59,10 +63,11 @@ public class Orderdetail {
 		return totalprice;
 	}
 	public void setTotalprice(double totalprice) {
-		this.totalprice = totalprice;
+		this.totalprice = (this.bookprice) * (this.bookcount);
 	}
 	
-	@OneToOne(mappedBy="orderdetail")
+	@ManyToOne(cascade = CascadeType.MERGE,optional = false,fetch = FetchType.LAZY)
+	@JoinColumn(name="orderid")
 	public Order getOrder() {
 		return order;
 	}

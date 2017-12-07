@@ -11,7 +11,7 @@ import com.bear.bookonline.entity.User;
 import com.bear.bookonline.user.dao.UserRegistDaoImpl;
 
 @Service
-@Transactional(readOnly=true)
+@Transactional
 public class UserRegistServiceImpl {
 	
 	@Resource

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -11,7 +12,11 @@ import org.springframework.stereotype.Repository;
 import com.bear.bookonline.entity.Book;
 import com.bear.bookonline.entity.BookType;
 import com.bear.bookonline.entity.Bookdetail;
-import com.bear.bookonline.entity.Shoppingcart;
+import com.bear.bookonline.entity.Cart;
+import com.bear.bookonline.entity.CartItem;
+import com.bear.bookonline.entity.Order;
+import com.bear.bookonline.entity.Orderdetail;
+import com.bear.bookonline.entity.User;
 
 @Repository
 public class BookDaoImpl {
@@ -64,8 +69,44 @@ public class BookDaoImpl {
 		return q.list();
 	}
 	
-	public void saveShopping(Shoppingcart sc) {
-		this.sessionFactory.getCurrentSession().save(sc);
+	public void saveShopping(User user,int id) {
+		Session session = sessionFactory.getCurrentSession();
+		Order order = null;
+		if(user.getOrderSet().size()<=0) {
+			order = new Order();
+		}else {
+			for(Order o : user.getOrderSet()) {		
+					order = o;
+			}
+			
+		}
+		
+		order.setUser(user);	
+		user.getOrderSet().add(order);
+		
+		session.update(user);	
+		session.save(order);
+		
+		Bookdetail bookdetail = this.findByDetailid(id);
+		
+		Orderdetail orderdetail = new Orderdetail();
+		orderdetail.setUsername(user.getUsername());
+		orderdetail.setBookname(bookdetail.getBookname());
+		orderdetail.setBookcount(bookdetail.getBookcount());
+		orderdetail.setBookprice(bookdetail.getBookprice());
+		
+		orderdetail.setOrder(order);
+		order.getOrderdetailSet().add(orderdetail);
+		
+		session.save(orderdetail);
+		session.update(order);
+		
+		
+	}
+	
+	public List<Orderdetail> findAll1(){
+		Query q = this.sessionFactory.getCurrentSession().createQuery("from Bookdetail");
+		return q.list();
 	}
 	
 	public List<Bookdetail>findByName(String bookname){
@@ -76,5 +117,14 @@ public class BookDaoImpl {
 	
 	public Bookdetail findByDetailid(int bookid) {
 		return this.sessionFactory.getCurrentSession().get(Bookdetail.class, bookid);
+	}
+	
+	public void deleteByOrderDetail(Orderdetail od) {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.delete(od);
+	}
+	
+	public Orderdetail findByOrderDetailid(int id) {
+		return this.sessionFactory.getCurrentSession().get(Orderdetail.class, id);
 	}
 }

@@ -15,29 +15,30 @@
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>css/style.css">
 		<style>
 			table{  border-collapse:collapse;  }   
-			td{  border:2px solid black;  } 
 			.td1 td{font-weight:bold;font-size:20px} 
 			.fenye{height:80px;width:750px;margin-top:100px;}
 			.fenye2{font-size:20px}
-			.sub_mingxing{width:300px;height:400px;}
+			.sub_mingxing{width:300px;height:400px;margin-left:20px;}
 			.aa a:hover{color:#FF8800;}
 	</style> 
 	</head>
 	<body>
 	<%
-		//List<Book> booklist = (List)request.getSession().getAttribute("list");
-		//if(booklist == null){
-			//request.getRequestDispatcher("book/list").forward(request, response);
-		//}
+		String path1 = request.getContextPath();
+		String basePath1 = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path1+"/";
+		List<Book> booklist = (List<Book>)request.getSession().getAttribute("list");
+		if(booklist == null){
+			response.sendRedirect(basePath1 + "book/list");
+		}
 	%>
 	<!-- start header -->
 		 <header>
 			<div class="top center">
 				<div class="left fl">
 					<ul>
-						<li><a href="<%=basePath%>index.jsp" target="_blank">图书商城</a></li>
+						<li><a href="<%=basePath%>book/list" target="_blank">图书商城</a></li>
 						<li>|</li>
-						<li><a href="<%=basePath%>index.jsp">首页</a></li>
+						<li><a href="<%=basePath%>book/list">首页</a></li>
 						<li>|</li>
 						<li><a href="">预售</a></li>
 						<li>|</li>
@@ -58,9 +59,11 @@
 					</ul>
 				</div>
 				<div class="right fr">
-					<div class="gouwuche fr"><a href="<%=basePath%>gouwuche.jsp">购物车</a></div>
+					<div class="gouwuche fr"><a href="<%=basePath%>book/shopping">购物车</a></div>
 					<div class="fr">
 						<ul>
+							<li><a href="<%=basePath%>adminlogin.jsp" target="_blank">管理员登录</a></li>
+							<li>|</li>
 							<li><a href="<%=basePath%>login.jsp" target="_blank">登录</a></li>
 							<li>|</li>
 							<li><a href="<%=basePath%>register.jsp" target="_blank" >注册</a></li>
@@ -77,7 +80,7 @@
 
 <!-- start banner_x -->
 		<div class="banner_x center">
-			<a href="<%=basePath%>index.jsp" target="_blank"><div class="logo fl"></div></a>
+			<a href="<%=basePath%>book/list" target="_blank"><div class="logo fl"></div></a>
 			<a href=""><div class="ad_top fl"></div></a>
 			<div class="nav fl">
 				<ul>
@@ -134,7 +137,7 @@
 		
 			<div class="mingxing f1">
 				<div class="sub_mingxing"><a href="<%=basePath %>book/findAllBookDetail?bookid=${book.id}" target="_blank"><img src="${book.picture }" alt="无法显示该图片"></a></div>
-				<div class="aa" style="align:center;font-size:20px;margin-top:-10px"><a href="<%=basePath %>book/findAllBookDetail?bookid=${book.id}" target="_blank">${book.name }</a></div>
+				<div class="aa" style="font-size:25px;margin-top:-10px;padding-left:20px;"><a href="<%=basePath %>book/findAllBookDetail?bookid=${book.id}" target="_blank">${book.name }</a></div>
 				<div class="youhui">${book.publisher }</div>
 				<div class="jiage">${book.price }</div>
 			</div>
@@ -144,11 +147,11 @@
 		<div style="margin-left:500px">
 		<table class="fenye">
        <tr>
-            <td colspan="6" align="center" bgcolor="#5BA8DE" class="fenye2">共${page.totalRecords}条记录 共${page.totalPages}页 当前第${page.pageNo}页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;             
+            <td colspan="6" align="center"  class="fenye2">共&emsp;${page.totalRecords}&emsp;条记录 &emsp;共&emsp;${page.totalPages}&emsp;页 &emsp;当前第&emsp;${page.pageNo}&emsp;页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;             
                 <a href="<%=request.getContextPath()%>/book/list?pageNo=${page.topPageNo}"><input type="button" name="fristPage" value="首页" class="fenye2"/></a>
                 <c:choose>
                   <c:when test="${page.pageNo!=1}">             
-                      <a href="<%=request.getContextPath()%>/book/list?pageNo=${page.previousPageNo }"><input type="button" name="previousPage" value="上一页" class="fenye2"/></a>                
+                      <a href="<%=request.getContextPath()%>/book/list?pageNo=${page.previousPageNo }"><input type="button" name="previousPage" value="上一页" class="fenye2"/></a>               
                   </c:when>
                   <c:otherwise>   
                       <input type="button" disabled="disabled" name="previousPage" value="上一页" class="fenye2"/>       
@@ -168,7 +171,7 @@
      </table>
      </div>
 		<footer class="mt20 center">			
-			<div class="mt20"><a href="<%=basePath %>index.jsp">图书商城</a> | <a href="">预售</a> | <a href="">购物指南</a> | <a href="">配送方式</a> | 
+			<div class="mt20"><a href="<%=basePath %>book/list">图书商城</a> | <a href="">预售</a> | <a href="">购物指南</a> | <a href="">配送方式</a> | 
 			<a href="">支付方式</a> | <a href="">售后服务</a> | <a href="">图书天猫店</a> | <a href="">图书淘宝直营店</a> | <a href="">图书网盟</a> | <a href="">隐私政策</a></div>
 			<div>京ICP证110507号 京ICP备10046444号 京公网安备11010802020134号 京网文[2014]0059-0009号</div> 
 			<div>违法和不良信息举报电话：185-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</div>

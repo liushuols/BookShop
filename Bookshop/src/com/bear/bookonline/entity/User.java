@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ public class User {
 	private String email;
 	private Set<Order> orderSet = new HashSet<Order>();
 	private Set<Log> logSet = new HashSet<Log>();
-	private Shoppingcart shoppingcart;
+	private Cart shoppingcart;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -66,7 +67,7 @@ public class User {
 		this.email = email;
 	}
 	
-	@OneToMany(mappedBy="user", targetEntity=Order.class, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="user", targetEntity=Order.class, cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	public Set<Order> getOrderSet() {
 		return orderSet;
 	}
@@ -74,7 +75,7 @@ public class User {
 		this.orderSet = orderSet;
 	}
 	
-	@OneToMany(mappedBy="user", targetEntity=Log.class, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="user", targetEntity=Log.class, cascade=CascadeType.MERGE, fetch = FetchType.LAZY)
 	public Set<Log> getLogSet() {
 		return logSet;
 	}
@@ -82,12 +83,11 @@ public class User {
 		this.logSet = logSet;
 	}
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@PrimaryKeyJoinColumn(name="id")
-	public Shoppingcart getShoppingcart() {
+	@OneToOne(mappedBy="user")
+	public Cart getShoppingcart() {
 		return shoppingcart;
 	}
-	public void setShoppingcart(Shoppingcart shoppingcart) {
+	public void setShoppingcart(Cart shoppingcart) {
 		this.shoppingcart = shoppingcart;
 	}
 	

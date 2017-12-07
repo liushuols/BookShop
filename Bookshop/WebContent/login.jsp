@@ -9,7 +9,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>会员登录</title>
-		<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/login.css">
+		<link rel="stylesheet" type="text/css" href="<%=basePath %>css/login.css">
 		
 	</head>
 	<body>
@@ -20,7 +20,7 @@
 				<!-- <a href="" alt=""><img alt="" src="./image/logo1.png"></a> -->
 			</div>
 		</div>
-		<form  method="post" action="user/userlogin" class="form center">
+		<form  method="post" action="userlogin" class="form center">
 		<div class="login">
 			<div class="login_center">
 				<div class="login_top">
