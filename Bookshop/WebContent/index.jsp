@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import=" java.util.List"%>
+<%@page import="java.util.List"%>
 <%@page import="com.bear.bookonline.entity.Book" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -136,7 +136,7 @@
 		<c:forEach var="book" items="${list }" varStatus="status">
 		
 			<div class="mingxing f1">
-				<div class="sub_mingxing"><a href="<%=basePath %>book/findAllBookDetail?bookid=${book.id}" target="_blank"><img src="${book.picture }" alt="无法显示该图片"></a></div>
+				<div class="sub_mingxing"><a href="<%=basePath %>book/findAllBookDetail?bookid=${book.id}" target="_blank"><img src="../${book.picture }" alt="无法显示该图片"></a></div>
 				<div class="aa" style="font-size:25px;margin-top:-10px;padding-left:20px;"><a href="<%=basePath %>book/findAllBookDetail?bookid=${book.id}" target="_blank">${book.name }</a></div>
 				<div class="youhui">${book.publisher }</div>
 				<div class="jiage">${book.price }</div>
@@ -147,7 +147,7 @@
 		<div style="margin-left:500px">
 		<table class="fenye">
        <tr>
-            <td colspan="6" align="center"  class="fenye2">共&emsp;${page.totalRecords}&emsp;条记录 &emsp;共&emsp;${page.totalPages}&emsp;页 &emsp;当前第&emsp;${page.pageNo}&emsp;页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;             
+            <td colspan="6" align="center"  class="fenye2">共&emsp;${page.totalRecords}&emsp;本图书 &emsp;共&emsp;${page.totalPages}&emsp;页 &emsp;当前第&emsp;${page.pageNo}&emsp;页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;             
                 <a href="<%=request.getContextPath()%>/book/list?pageNo=${page.topPageNo}"><input type="button" name="fristPage" value="首页" class="fenye2"/></a>&nbsp;&nbsp;
                 <c:choose>
                   <c:when test="${page.pageNo!=1}">             

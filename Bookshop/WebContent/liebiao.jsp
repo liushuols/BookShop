@@ -125,7 +125,7 @@
 		<div class="danpin center">
 			<div class="main center" style="float:left">
 				<div class="mingxing fl mb20" style="padding-left:20px;border:2px solid #fff;width:250px;cursor:pointer;" onmouseout="this.style.border='2px solid #fff'" onmousemove="this.style.border='2px solid red'">
-					<div class="sub_mingxing"><a href="<%=basePath %>book/findAllBookDetail?bookid=${b.id}" target="_blank"><img src="${b.picture }" alt="无法显示该图片"></a></div>
+					<div class="sub_mingxing"><a href="<%=basePath %>book/findAllBookDetail?bookid=${b.id}" target="_blank"><img src="../${b.picture }" alt="无法显示该图片"></a></div>
 					<div class="aa" style="align:center;font-size:25px;"><a href="<%=basePath %>book/findAllBookDetail?bookid=${b.id}" target="_blank">${b.name }</a></div>
 					<div class="youhui">${b.publisher }</div>
 					<div class="jiage">${b.price }</div>

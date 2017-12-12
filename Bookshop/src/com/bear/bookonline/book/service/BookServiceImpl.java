@@ -61,6 +61,10 @@ public class BookServiceImpl {
     	return this.bookDaoImpl.findAllType(typeid);
     }
     
+    public BookType findAllType1(String typename){
+    	return (BookType) this.bookDaoImpl.findAllType1(typename);
+    }
+    
     public List<Bookdetail> findAllBookDetail(int bookid){
     	return this.bookDaoImpl.findBookDetailByBookid(bookid);
     }
@@ -81,11 +85,19 @@ public class BookServiceImpl {
     	this.bookDaoImpl.deleteByOrderDetail(od);
     }
     
-    public List<Orderdetail> findAll1(){
+    public List<Bookdetail> findAll1(){
     	return this.bookDaoImpl.findAll1();
     }
     
     public Orderdetail findByOrderDetailid(int id) {
     	return this.bookDaoImpl.findByOrderDetailid(id);
+    }
+    
+    public void saveBooks(Bookdetail bd,String bookType) {
+    	this.bookDaoImpl.saveBooks(bd,bookType);
+    }
+    
+    public void deletBooks(int bookid) {
+    	this.bookDaoImpl.deleteBooks(bookid);
     }
 }

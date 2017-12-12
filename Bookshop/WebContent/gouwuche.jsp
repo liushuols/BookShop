@@ -64,11 +64,11 @@
 					<div class="sub_content fl " style="margin-left:30px;height:60px">
 						<input type="checkbox" value="quanxuan" class="quanxuan" />
 					</div>
-					<div style="width=250px;float:left;font-size:20px"><span width=250px;>${o.bookname }</span></div>
-					<div style="width=50px;float:left;margin-left:290px">${o.bookprice }</div>
+					<div style="width=250px;float:left;font-size:20px;margin-left:100px;padding-left:10px;align:center;">${o.bookname }</div>
+					<div style="width=150px;float:left;margin-left:230px;padding-left:50px;">${o.bookprice }</div>
 					<div style="width=50px;float:left;margin-left:140px">${o.bookcount }</div>
-					<div style="width=50px;float:left;margin-left:150px">${(o.bookprice)*(o.bookcount) }</div>
-					<div class="delete" style="width=50px;float:left;margin-left:160px"><a href="<%=basePath %>book/delete?orderdetailid=${o.orderdetailid}">删除</a></div>
+					<div style="width=50px;float:left;margin-left:140px">${(o.bookprice)*(o.bookcount) }</div>
+					<div class="delete" style="width=50px;float:left;margin-left:145px"><a href="<%=basePath %>book/delete?orderdetailid=${o.orderdetailid}">删除</a></div>
 					
 				</div>
 				</c:forEach>
@@ -85,7 +85,7 @@
 				</div>
 				<div class="jiesuan fr">
 					<div class="jiesuanjiage fl">合计（不含运费）：<span>${totalPrice }</span></div>
-					<div class="jsanniu fr"><input class="jsan" type="submit" name="jiesuan"  value="去结算"/></div>
+					<div class="jsanniu fr"><a href="<%=basePath %>book/list"><input class="jsan" type="submit" name="jiesuan"  value="去结算"/></a></div>
 					<div class="clear"></div>
 				</div>
 				<div class="clear"></div>

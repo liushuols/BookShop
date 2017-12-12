@@ -63,6 +63,12 @@ public class BookDaoImpl {
 		return q.list();
 	}
 	
+	public BookType findAllType1(String typename){
+		Query q = this.sessionFactory.getCurrentSession().createQuery("from BookType where typename=?");
+		q.setParameter(0, typename);
+		return (BookType) q.uniqueResult();
+	}
+	
 	public List<Bookdetail> findBookDetailByBookid(int bookid){
 		Query q = this.sessionFactory.getCurrentSession().createQuery("from Bookdetail where bookid=?");
 		q.setParameter(0, bookid);
@@ -104,7 +110,7 @@ public class BookDaoImpl {
 		
 	}
 	
-	public List<Orderdetail> findAll1(){
+	public List<Bookdetail> findAll1(){
 		Query q = this.sessionFactory.getCurrentSession().createQuery("from Bookdetail");
 		return q.list();
 	}
@@ -126,5 +132,34 @@ public class BookDaoImpl {
 	
 	public Orderdetail findByOrderDetailid(int id) {
 		return this.sessionFactory.getCurrentSession().get(Orderdetail.class, id);
+	}
+	
+	public void saveBooks(Bookdetail bd,String bookType) {
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		BookType bt = this.findAllType1(bookType);
+		
+		Book book = new Book();
+		book.setName(bd.getBookname());
+		book.setPicture(bd.getBookimg1());
+		book.setPrice(bd.getBookprice());
+		book.setPublisher(bd.getBookpublisher());
+		book.setBookType(bt);
+		
+		book.setBookdetail(bd);
+		bd.setBook(book);
+		
+		session.save(bd);
+		session.save(book);
+
+	}
+	
+	public void deleteBooks(int bookid) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Query q = session.createQuery("from Bookdetail where bookid=?");
+		q.setParameter(0, bookid);
+		Bookdetail bd = (Bookdetail) q.uniqueResult();
+		
+		session.delete(bd);
 	}
 }

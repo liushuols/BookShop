@@ -36,7 +36,7 @@ public class BookController {
 	    if (pageNo == null) {
 	        pageNo = "1";
 	    }
-	    Page page = bookServiceImpl.queryForPage(Integer.valueOf(pageNo), 3);
+	    Page page = bookServiceImpl.queryForPage(Integer.valueOf(pageNo), 6);
 	    request.setAttribute("page", page);
 	    List<Book> list = page.getList();
 	    session.setAttribute("list", list);
@@ -45,7 +45,7 @@ public class BookController {
 	
 	@RequestMapping("/list1")
 	public String findAll1(HttpSession session) {
-		List<Orderdetail> detailList1 = this.bookServiceImpl.findAll1();
+		List<Bookdetail> detailList1 = this.bookServiceImpl.findAll1();
 		session.setAttribute("detailList1", detailList1);
 		return "adminIndex";
 	}
@@ -75,10 +75,11 @@ public class BookController {
 		Set<Order> shoppingCartSet = (Set<Order>)session.getAttribute("shoppingcart");
 		session.setAttribute("shoppingCartSet", shoppingCartSet);
 		
-		for(Order order : shoppingCartSet) {
-			int size = order.getOrderdetailSet().size();
-			session.setAttribute("size", size);
-		}	
+		int size = 0;
+		for(Order order : user.getOrderSet()) {
+			size = order.getOrderdetailSet().size();
+		}
+		session.setAttribute("size", size);
 		
 		for(Order order : user.getOrderSet()) {
 			double sum = 0;
@@ -117,17 +118,18 @@ public class BookController {
 		Set<Order> shoppingCartSet = user.getOrderSet();
 		session.setAttribute("shoppingCartSet", shoppingCartSet);
 
+		int size = 0;
 		for(Order order : user.getOrderSet()) {
-			int size = order.getOrderdetailSet().size();
-			session.setAttribute("size", size);
-		}	
+			size = order.getOrderdetailSet().size();
+		}
+		session.setAttribute("size", size);
 		
 		for(Order order : user.getOrderSet()) {
 			double sum = 0;
 			for(Orderdetail od : order.getOrderdetailSet()) {
 				sum = sum + od.getTotalprice();
-				session.setAttribute("totalPrice",sum);
 			}
+			session.setAttribute("totalPrice",sum);
 		}
 		
 		return "gouwuche";
@@ -139,19 +141,51 @@ public class BookController {
 		Set<Order> orderSet = user.getOrderSet();
 		session.setAttribute("shoppingCartSet", orderSet);
 		
+		int size = 0;
 		for(Order order : user.getOrderSet()) {
-			int size = order.getOrderdetailSet().size();
-			session.setAttribute("size", size);
-		}	
+			size = order.getOrderdetailSet().size();
+		}
+		session.setAttribute("size", size);
 		
 		for(Order order : user.getOrderSet()) {
 			double sum = 0;
 			for(Orderdetail od : order.getOrderdetailSet()) {
 				sum = sum + od.getTotalprice();
-				session.setAttribute("totalPrice",sum);
 			}
+			session.setAttribute("totalPrice",sum);
 		}
 		
 		return "gouwuche";
+	}
+	
+	@RequestMapping("/addBook")
+	public String addBooks(HttpSession session,@RequestParam("bookImg1") String bookImg1,@RequestParam("bookName") String bookName,
+			@RequestParam("bookType") String bookType,@RequestParam("bookIntroduce") String bookIntroduce,
+			@RequestParam("bookPrice") double bookPrice,@RequestParam("bookPublisher") String bookPublisher) {
+		Bookdetail bd = new Bookdetail();
+		
+		bd.setBookimg1(bookImg1);
+		bd.setBookname(bookName);
+		bd.setIntroduce(bookIntroduce);
+		bd.setBookprice(bookPrice);
+		bd.setBookpublisher(bookPublisher);
+		
+		this.bookServiceImpl.saveBooks(bd, bookType);
+		session.setAttribute("bd", bd);
+		
+		List<Bookdetail> detailList1 = this.bookServiceImpl.findAll1();
+		session.setAttribute("detailList1", detailList1);
+		
+		return "adminList";
+	}
+	
+	@RequestMapping("adminDelete")
+	public String adminRemoveBooks(HttpSession session,@RequestParam("bookid") int bookid) {
+		this.bookServiceImpl.deletBooks(bookid);
+		
+		List<Bookdetail> detailList1 = this.bookServiceImpl.findAll1();
+		session.setAttribute("detailList1", detailList1);
+		
+		return "adminList";
 	}
 }

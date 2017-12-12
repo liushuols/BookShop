@@ -15,6 +15,32 @@
 		<meta charset="UTF-8">
 		<title>立即购买-图书商城</title>
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>css/style.css">
+		<link href="<%=basePath %>css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
+		<link href="<%=basePath %>css/style1.css" type="text/css" rel="stylesheet" media="all">
+		
+		<!-- js -->
+		<script src="<%=basePath %>js/jquery.min.js"></script>
+		<script type="text/javascript" src="<%=basePath %>js/bootstrap-3.1.1.min.js"></script>
+		<script src="<%=basePath %>js/imagezoom.js"></script>
+		<!-- FlexSlider -->
+		<script defer src="<%=basePath %>js/jquery.flexslider.js"></script>
+		<link rel="stylesheet" href="<%=basePath %>css/flexslider.css" type="text/css" media="screen" />
+		<script>
+			// Can also be used with $(document).ready()
+			$(window).load(function() {
+		 	 $('.flexslider').flexslider({
+				animation: "slide",
+				controlNav: "thumbnails"
+		  	});
+			});
+		</script>
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		
+		<style type="text/css">
+			.a4{margin-top:-10px;}
+			.qty{font-size:20px;color:#5D4B33;font-weight:bold;margin: 15px 10px 0 10px;}
+			.min{width:50px;height:37px;border: 1px solid #ccc;border-radius: 4px;}
+		</style>
 	</head>
 	<body>
 	<!-- start header -->
@@ -119,8 +145,23 @@
 		</div>	
 	</div>
 	
-	<div class="jieshao mt20 w">
-		<div class="left fl" style="width:400px;height:400px"><img src="../${bd.bookimg1 }"></div>
+	<div class="jieshao mt20 w" style="height:630px;">
+		
+		<div class="col-md-4 single-grid">		
+			<div class="flexslider">
+				<ul class="slides">
+					<li data-thumb="../${bd.bookimg1}">
+						<div class="thumb-image"> <img src="../${bd.bookimg1}" data-imagezoom="true" class="img-responsive" style="width:375px;height:450px;"> </div>
+					</li>
+					<li data-thumb="${bd.bookimg2}">
+						<div class="thumb-image"> <img src="${bd.bookimg2}" data-imagezoom="true" class="img-responsive" style="width:375px;height:450px;"> </div>
+					</li>
+					<li data-thumb="${bd.bookimg3}">
+						<div class="thumb-image"> <img src="${bd.bookimg3}" data-imagezoom="true" class="img-responsive" style="width:375px;height:450px;"> </div>
+					</li> 
+				</ul>
+			</div>
+		</div>	
 		<div class="right fr">
 			<div class="h3 ml20 mt20">${bd.bookname }</div>
 			<div class="jianjie mr40 ml20 mt10">${bd.introduce }</div>
@@ -129,20 +170,22 @@
 			<div class="xzbb ml20 mt10">
 				<div class="banben fl">
 					<a>
-						<span>${bd.bookcount } </span>
+						<div class="a4">
+							<p class="qty">数量 :</p><input min="1" type="number" id="quantity" name="quantity" value="1" class="min">	
+						</div>
 					</a>
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div class="xqxq mt20 ml20">
+			<div class="xqxq mt20 ml20" style="height:130px;margin-top:50px;">
 				<div class="top1 mt10">
-					<div class="left1 fl">${bd.bookname }</div>
+					<div class="left1 fl" style="font-size:25px;">${bd.bookname }</div>
 					<div class="right1 fr">${bd.bookprice }</div>
 					<div class="clear"></div>
 				</div>
 				<div class="bot mt20 ft20 ftbc">总价格：${(bd.bookcount)*(bd.bookprice) }</div>
 			</div>
-			<div class="xiadan ml20 mt20">
+			<div class="xiadan ml20 mt20" style="margin-left:100px;">
 					<input class="jrgwc"  type="button" name="jrgwc" value="立即选购" />
 					<input class="jrgwc" type="submit" name="jrgwc" value="加入购物车" />
 				

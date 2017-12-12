@@ -66,7 +66,7 @@ public class Book {
 	}
 	
 	@OneToOne(cascade=CascadeType.ALL)
-	@PrimaryKeyJoinColumn(name="bookid")
+	@JoinColumn(name="bookid")
 	public Bookdetail getBookdetail() {
 		return bookdetail;
 	}

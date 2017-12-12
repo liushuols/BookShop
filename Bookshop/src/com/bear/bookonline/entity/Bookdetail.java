@@ -1,5 +1,6 @@
 package com.bear.bookonline.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,12 +25,10 @@ public class Bookdetail {
 	private String bookimg2;
 	private String bookimg3;
 	private String bookimg4;
-	private String bookaddshoppingcart;
 	private Book book;
 	
 	@Id
-	@GeneratedValue(generator="foreign")
-	@GenericGenerator(name="foreign",strategy="foreign",parameters={@Parameter(name="property",value="book")})
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getBookid() {
 		return bookid;
 	}
@@ -90,14 +89,8 @@ public class Bookdetail {
 	public void setBookimg4(String bookimg4) {
 		this.bookimg4 = bookimg4;
 	}
-	public String getBookaddshoppingcart() {
-		return bookaddshoppingcart;
-	}
-	public void setBookaddshoppingcart(String bookaddshoppingcart) {
-		this.bookaddshoppingcart = bookaddshoppingcart;
-	}
 	
-	@OneToOne(mappedBy="bookdetail")
+	@OneToOne(mappedBy="bookdetail",cascade=CascadeType.ALL)
 	public Book getBook() {
 		return book;
 	}
