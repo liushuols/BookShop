@@ -63,6 +63,17 @@ public class BookDaoImpl {
 		return q.list();
 	}
 	
+	public BookType findAllType2(int typeid){
+		Query q = this.sessionFactory.getCurrentSession().createQuery("from BookType where typeid=?");
+		q.setParameter(0, typeid);
+		return (BookType) q.uniqueResult();
+	}
+	
+	public List<BookType> findAllType1(){
+		Query q = this.sessionFactory.getCurrentSession().createQuery("from BookType");
+		return q.list();
+	}
+	
 	public BookType findAllType1(String typename){
 		Query q = this.sessionFactory.getCurrentSession().createQuery("from BookType where typename=?");
 		q.setParameter(0, typename);
@@ -73,6 +84,12 @@ public class BookDaoImpl {
 		Query q = this.sessionFactory.getCurrentSession().createQuery("from Bookdetail where bookid=?");
 		q.setParameter(0, bookid);
 		return q.list();
+	}
+	
+	public Bookdetail findBookDetailById(int bookid){
+		Query q = this.sessionFactory.getCurrentSession().createQuery("from Bookdetail where bookid=?");
+		q.setParameter(0, bookid);
+		return (Bookdetail) q.uniqueResult();
 	}
 	
 	public void saveShopping(User user,int id) {
@@ -161,5 +178,23 @@ public class BookDaoImpl {
 		Bookdetail bd = (Bookdetail) q.uniqueResult();
 		
 		session.delete(bd);
+	}
+	
+	public void updateBooks(Bookdetail bd,int typeid) {
+		Session session = this.sessionFactory.getCurrentSession();
+		BookType bt = this.findAllType2(typeid);
+		
+		Book book = bd.getBook();
+		book.setName(bd.getBookname());
+		book.setPicture(bd.getBookimg1());
+		book.setPrice(bd.getBookprice());
+		book.setPublisher(bd.getBookpublisher());
+		book.setBookType(bt);
+		
+		book.setBookdetail(bd);
+		bd.setBook(book);
+		
+		session.update(bd);
+		session.update(book);
 	}
 }

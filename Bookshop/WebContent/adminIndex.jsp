@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             </li>
             <li>
-                <img src="<%=basePath %>/images/32/200.png" />&nbsp;&nbsp;<a class="loginout" href="#">退出</a>
+                <img src="<%=basePath %>/images/32/200.png" />&nbsp;&nbsp;<a class="loginout" href="<%=basePath%>exitLogin">退出</a>
             </li>
 
         </ul>

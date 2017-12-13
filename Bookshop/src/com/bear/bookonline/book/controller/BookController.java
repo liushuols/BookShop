@@ -50,6 +50,14 @@ public class BookController {
 		return "adminIndex";
 	}
 	
+	@RequestMapping("/list2")
+	public String selectAllType(HttpSession session,@RequestParam("bookid") int bookid) {
+		Bookdetail book = this.bookServiceImpl.findBookDetialById(bookid);
+		List<BookType> typeList = this.bookServiceImpl.findAllType1();
+		session.setAttribute("typeList", typeList);
+		session.setAttribute("book", book);
+		return "adminUpdate";
+	}
 	
 	@RequestMapping("/findByTypeid")
 	public String findByTypeid(Model model,@RequestParam("typeid") int typeid) {
@@ -175,7 +183,6 @@ public class BookController {
 		
 		List<Bookdetail> detailList1 = this.bookServiceImpl.findAll1();
 		session.setAttribute("detailList1", detailList1);
-		
 		return "adminList";
 	}
 	
@@ -186,6 +193,25 @@ public class BookController {
 		List<Bookdetail> detailList1 = this.bookServiceImpl.findAll1();
 		session.setAttribute("detailList1", detailList1);
 		
+		return "adminList";
+	}
+	
+	@RequestMapping("/updateBooks")
+	public String editBooks(HttpSession session,@RequestParam("bookName") String name,@RequestParam("bookimg1") String img1,@RequestParam("introduce") String introduce,
+			@RequestParam("bookType") int typeid,@RequestParam("bookPrice") double price,@RequestParam("bookPublisher") String publisher) {
+		Bookdetail bd = (Bookdetail) session.getAttribute("book");
+		
+		bd.setBookimg1(img1);
+		bd.setBookname(name);
+		bd.setIntroduce(introduce);
+		bd.setBookprice(price);
+		bd.setBookpublisher(publisher);
+		
+		this.bookServiceImpl.updateBooks(bd, typeid);
+		session.setAttribute("bd", bd);
+		
+		List<Bookdetail> detailList1 = this.bookServiceImpl.findAll1();
+		session.setAttribute("detailList1", detailList1);
 		return "adminList";
 	}
 }

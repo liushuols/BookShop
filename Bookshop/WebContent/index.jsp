@@ -68,7 +68,7 @@
 							<li>|</li>
 							<li><a href="<%=basePath%>register.jsp" target="_blank" >注册</a></li>
 							<li>|</li>
-							<li><a href="">消息通知</a></li>
+							<li><a href="<%=basePath%>exitLogin">退出登录</a></li>
 						</ul>
 					</div>
 					<div class="clear"></div>

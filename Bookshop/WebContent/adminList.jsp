@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         		<th class="intro">${book.introduce}</th>
                         		<th>${book.bookprice}</th>
                         		<th>${book.bookpublisher}</th>
-                        		<th style="font-size:25px"><a href="<%=basePath %>/../update.do?bookid=${book.bookid }">修改</a>&emsp;|&emsp;<a href="<%=basePath %>book/adminDelete?bookid=${book.bookid }">删除</a></th>  
+                        		<th style="font-size:25px"><a href="<%=basePath %>book/list2?bookid=${book.bookid }">修改</a>&emsp;|&emsp;<a href="<%=basePath %>book/adminDelete?bookid=${book.bookid }">删除</a></th>  
                         		<tr>                           
                         	</tbody>
                         </c:forEach>

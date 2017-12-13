@@ -36,4 +36,10 @@ public class UserLoginController {
 		model.addAttribute("error", "该用户不存在，请进行注册！");
 		return "register";
 	}
+	
+	@RequestMapping("exitLogin")
+	public String exitLogin(HttpSession session) {
+		session.invalidate();
+		return "redirect:book/list";
+	}
 }

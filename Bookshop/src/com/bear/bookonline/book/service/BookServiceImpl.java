@@ -100,4 +100,16 @@ public class BookServiceImpl {
     public void deletBooks(int bookid) {
     	this.bookDaoImpl.deleteBooks(bookid);
     }
+    
+    public List<BookType> findAllType1(){
+    	return this.bookDaoImpl.findAllType1();
+    }
+    
+    public void updateBooks(Bookdetail bd,int typeid) {
+    	this.bookDaoImpl.updateBooks(bd, typeid);
+    }
+    
+    public Bookdetail findBookDetialById(int bookid) {
+    	return this.bookDaoImpl.findBookDetailById(bookid);
+    }
 }
