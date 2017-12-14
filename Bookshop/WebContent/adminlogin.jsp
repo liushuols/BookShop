@@ -10,7 +10,6 @@
 		<meta charset="UTF-8">
 		<title>管理员登录</title>
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>css/login.css">
-		
 	</head>
 	<body>
 		<!-- login -->
@@ -25,7 +24,6 @@
 			<div class="login_center">
 				<div class="login_top">
 					<div class="left fl">管理员登录</div>
-					
 					<div class="clear"></div>
 					<div class="xian center"></div>
 				</div>
@@ -36,14 +34,12 @@
 				<div class="login_submit">
 					<input class="submit" type="submit" name="submit" value="立即登录" >
 				</div>
-				
 			</div>
 		</div>
 		</form>
 		<footer>
 			<div class="copyright"><a href="">简体</a> | <a href="">繁体</a> | <a href="">English</a> | <a href="">常见问题</a></div>
 			<div class="copyright">本公司版权所有-京ICP备10046444-<img src="./image/ghs.png" alt="">京公网安备11010802020134号-京ICP证110507号</div>
-
 		</footer>
 	</body>
 </html>

@@ -23,10 +23,20 @@ public class BookServiceImpl {
 	@Resource
 	private BookDaoImpl bookDaoImpl;
 	
+	/**
+	 * 从Book表中查询所有图书的信息
+	 * @return Book类的List集合
+	 */
 	public List<Book> listAll(){
 		return this.bookDaoImpl.findAll();
 	}
 	
+	/**
+	 * 对Book表进行分页查询
+	 * @param currentPage 当前页
+	 * @param pageSize 每页的记录数
+	 * @return Page类的对象
+	 */
 	public Page queryForPage(int currentPage,int pageSize) {
         Page page = new Page();       
         //总记录数
@@ -35,81 +45,36 @@ public class BookServiceImpl {
         int offset = page.countOffset(currentPage,pageSize);  
         //分页查询结果集
         List<Book> list = bookDaoImpl.queryForPage(offset, pageSize); 
+        //给Page类的每个属性进行赋值
         page.setPageNo(currentPage);
         page.setPageSize(pageSize);
         page.setTotalRecords(allRow);
         page.setList(list);    
         return page;
     }
-     public void Servicesave(Book st){
-  	   bookDaoImpl.save(st);
-     }
-    public void Serviceupdate(Book st){
-  	  bookDaoImpl.update(st);
-    }
-    public void Servicedelete(Book st){
-  	  bookDaoImpl.delete(st);
-    }
+	
+	/**
+	 * 查询记录总数
+	 * @return 记录总数的值
+	 */
     public int ServicegetCount(){
         return bookDaoImpl.getAllRowCount();
     }
-    public List <Book> QueryByTypeid(int typeid){
-        return bookDaoImpl.QueryByTypeid(typeid);
-    }
     
-    public List<BookType> findAllType(int typeid){
-    	return this.bookDaoImpl.findAllType(typeid);
-    }
-    
-    public BookType findAllType1(String typename){
-    	return (BookType) this.bookDaoImpl.findAllType1(typename);
-    }
-    
-    public List<Bookdetail> findAllBookDetail(int bookid){
-    	return this.bookDaoImpl.findBookDetailByBookid(bookid);
-    }
-    
-    public void saveShopping(User user,int id) {
-    	this.bookDaoImpl.saveShopping(user,id);
-    }
-    
-    public List<Bookdetail> findByName(String bookname){
-    	return this.bookDaoImpl.findByName(bookname);
-    }
-    
-    public Bookdetail findByDetailid(int bookid) {
-    	return this.bookDaoImpl.findByDetailid(bookid);
-    }
-    
-    public void deleteByOrderDetail(Orderdetail od) {
-    	this.bookDaoImpl.deleteByOrderDetail(od);
-    }
-    
+    /**
+	 * 查询Bookdetail表的所有详细信息
+	 * @return Bookdetail类的List集合
+	 */
     public List<Bookdetail> findAll1(){
     	return this.bookDaoImpl.findAll1();
     }
-    
-    public Orderdetail findByOrderDetailid(int id) {
-    	return this.bookDaoImpl.findByOrderDetailid(id);
-    }
-    
-    public void saveBooks(Bookdetail bd,String bookType) {
-    	this.bookDaoImpl.saveBooks(bd,bookType);
-    }
-    
-    public void deletBooks(int bookid) {
-    	this.bookDaoImpl.deleteBooks(bookid);
-    }
-    
-    public List<BookType> findAllType1(){
-    	return this.bookDaoImpl.findAllType1();
-    }
-    
-    public void updateBooks(Bookdetail bd,int typeid) {
-    	this.bookDaoImpl.updateBooks(bd, typeid);
-    }
-    
-    public Bookdetail findBookDetialById(int bookid) {
-    	return this.bookDaoImpl.findBookDetailById(bookid);
+
+    /**
+	 * 根据bookid查询Bookdetail表的信息
+	 * @param bookid 图书的id值
+	 * @return Bookdetail类的单个对象
+	 */
+    public Bookdetail findByDetailid(int bookid) {
+    	return this.bookDaoImpl.findByDetailid(bookid);
     }
 }

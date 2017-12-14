@@ -24,177 +24,52 @@ public class BookDaoImpl {
 	@Resource
 	private SessionFactory sessionFactory;
 	
+	/**
+	 * 从Book表中查询所有图书的信息
+	 * @return Book类的List集合
+	 */
 	public List<Book> findAll(){
 		Query q = this.sessionFactory.getCurrentSession().createQuery("from Book");
 		return q.list();
 	}
 	
+	/**
+	 * 对Book表进行分页查询
+	 * @param offset 从第几条记录开始
+	 * @param length 每页显示几条记录
+	 * @return Book类的List集合
+	 */
 	public List<Book> queryForPage(int offset, int length) {
-	    //查询所有的记录数
 	    Query query= (Query) sessionFactory.getCurrentSession().createQuery("from Book");    
 	    query.setFirstResult(offset);
 	    query.setMaxResults(length);            
 	    return query.list(); 
 	}
-	public void save(Book st){
-		sessionFactory.getCurrentSession().save(st);
-	}
-	public void update(Book st) {   
-	    sessionFactory.getCurrentSession().update(st);
-	}
-	public void delete(Book st) {      
-	    sessionFactory.getCurrentSession().delete(st);
-	}
-	//查询记录总数
+	
+	/**
+	 * 查询记录总数
+	 * @return 记录总数的值
+	 */
 	public int getAllRowCount(){
 	    int count=((Long) sessionFactory.getCurrentSession().createQuery( "select count(*) from Book").iterate().next()).intValue();
 	    return count;  
 	}
-	//根据typeid查询记录
-	public List<Book> QueryByTypeid(int typeid) {
-	    Query q = this.sessionFactory.getCurrentSession().createQuery("from Book where typeid=?");
-	    q.setParameter(0, typeid);
-	    return q.list();
-	}
 	
-	public List<BookType> findAllType(int typeid){
-		Query q = this.sessionFactory.getCurrentSession().createQuery("from BookType where typeid=?");
-		q.setParameter(0, typeid);
-		return q.list();
-	}
-	
-	public BookType findAllType2(int typeid){
-		Query q = this.sessionFactory.getCurrentSession().createQuery("from BookType where typeid=?");
-		q.setParameter(0, typeid);
-		return (BookType) q.uniqueResult();
-	}
-	
-	public List<BookType> findAllType1(){
-		Query q = this.sessionFactory.getCurrentSession().createQuery("from BookType");
-		return q.list();
-	}
-	
-	public BookType findAllType1(String typename){
-		Query q = this.sessionFactory.getCurrentSession().createQuery("from BookType where typename=?");
-		q.setParameter(0, typename);
-		return (BookType) q.uniqueResult();
-	}
-	
-	public List<Bookdetail> findBookDetailByBookid(int bookid){
-		Query q = this.sessionFactory.getCurrentSession().createQuery("from Bookdetail where bookid=?");
-		q.setParameter(0, bookid);
-		return q.list();
-	}
-	
-	public Bookdetail findBookDetailById(int bookid){
-		Query q = this.sessionFactory.getCurrentSession().createQuery("from Bookdetail where bookid=?");
-		q.setParameter(0, bookid);
-		return (Bookdetail) q.uniqueResult();
-	}
-	
-	public void saveShopping(User user,int id) {
-		Session session = sessionFactory.getCurrentSession();
-		Order order = null;
-		if(user.getOrderSet().size()<=0) {
-			order = new Order();
-		}else {
-			for(Order o : user.getOrderSet()) {		
-					order = o;
-			}
-			
-		}
-		
-		order.setUser(user);	
-		user.getOrderSet().add(order);
-		
-		session.update(user);	
-		session.save(order);
-		
-		Bookdetail bookdetail = this.findByDetailid(id);
-		
-		Orderdetail orderdetail = new Orderdetail();
-		orderdetail.setUsername(user.getUsername());
-		orderdetail.setBookname(bookdetail.getBookname());
-		orderdetail.setBookcount(bookdetail.getBookcount());
-		orderdetail.setBookprice(bookdetail.getBookprice());
-		
-		orderdetail.setOrder(order);
-		order.getOrderdetailSet().add(orderdetail);
-		
-		session.save(orderdetail);
-		session.update(order);
-		
-		
-	}
-	
+	/**
+	 * 查询Bookdetail表的所有详细信息
+	 * @return Bookdetail类的List集合
+	 */
 	public List<Bookdetail> findAll1(){
 		Query q = this.sessionFactory.getCurrentSession().createQuery("from Bookdetail");
 		return q.list();
 	}
-	
-	public List<Bookdetail>findByName(String bookname){
-		Query q = this.sessionFactory.getCurrentSession().createQuery("from Bookdetail where bookname=?");
-		q.setParameter(0, bookname);
-		return q.list();
-	}
-	
+
+	/**
+	 * 根据bookid查询Bookdetail表的信息
+	 * @param bookid 图书的id值
+	 * @return Bookdetail类的单个对象
+	 */
 	public Bookdetail findByDetailid(int bookid) {
 		return this.sessionFactory.getCurrentSession().get(Bookdetail.class, bookid);
-	}
-	
-	public void deleteByOrderDetail(Orderdetail od) {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.delete(od);
-	}
-	
-	public Orderdetail findByOrderDetailid(int id) {
-		return this.sessionFactory.getCurrentSession().get(Orderdetail.class, id);
-	}
-	
-	public void saveBooks(Bookdetail bd,String bookType) {
-		Session session = this.sessionFactory.getCurrentSession();
-		
-		BookType bt = this.findAllType1(bookType);
-		
-		Book book = new Book();
-		book.setName(bd.getBookname());
-		book.setPicture(bd.getBookimg1());
-		book.setPrice(bd.getBookprice());
-		book.setPublisher(bd.getBookpublisher());
-		book.setBookType(bt);
-		
-		book.setBookdetail(bd);
-		bd.setBook(book);
-		
-		session.save(bd);
-		session.save(book);
-
-	}
-	
-	public void deleteBooks(int bookid) {
-		Session session = this.sessionFactory.getCurrentSession();
-		Query q = session.createQuery("from Bookdetail where bookid=?");
-		q.setParameter(0, bookid);
-		Bookdetail bd = (Bookdetail) q.uniqueResult();
-		
-		session.delete(bd);
-	}
-	
-	public void updateBooks(Bookdetail bd,int typeid) {
-		Session session = this.sessionFactory.getCurrentSession();
-		BookType bt = this.findAllType2(typeid);
-		
-		Book book = bd.getBook();
-		book.setName(bd.getBookname());
-		book.setPicture(bd.getBookimg1());
-		book.setPrice(bd.getBookprice());
-		book.setPublisher(bd.getBookpublisher());
-		book.setBookType(bt);
-		
-		book.setBookdetail(bd);
-		bd.setBook(book);
-		
-		session.update(bd);
-		session.update(book);
 	}
 }

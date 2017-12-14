@@ -30,188 +30,27 @@ public class BookController {
 	@Resource
 	private BookServiceImpl bookServiceImpl;
 	
+	/**
+	 * 分页显示图书
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return 首页
+	 */
 	@RequestMapping("/list")
-	public String findAll(HttpServletRequest request,HttpServletResponse response,HttpSession session) {   
+	public String findAll(HttpServletRequest request,HttpServletResponse response,HttpSession session) {  
+		//获取页码参数
 	    String pageNo = request.getParameter("pageNo");
+	    //判断页码是否为空
 	    if (pageNo == null) {
 	        pageNo = "1";
 	    }
+	    //调用Service层方法，并传入实际参数
 	    Page page = bookServiceImpl.queryForPage(Integer.valueOf(pageNo), 6);
+	    //将对象存进session中
 	    request.setAttribute("page", page);
 	    List<Book> list = page.getList();
 	    session.setAttribute("list", list);
 	    return "index";
-	}
-	
-	@RequestMapping("/list1")
-	public String findAll1(HttpSession session) {
-		List<Bookdetail> detailList1 = this.bookServiceImpl.findAll1();
-		session.setAttribute("detailList1", detailList1);
-		return "adminIndex";
-	}
-	
-	@RequestMapping("/list2")
-	public String selectAllType(HttpSession session,@RequestParam("bookid") int bookid) {
-		Bookdetail book = this.bookServiceImpl.findBookDetialById(bookid);
-		List<BookType> typeList = this.bookServiceImpl.findAllType1();
-		session.setAttribute("typeList", typeList);
-		session.setAttribute("book", book);
-		return "adminUpdate";
-	}
-	
-	@RequestMapping("/findByTypeid")
-	public String findByTypeid(Model model,@RequestParam("typeid") int typeid) {
-		List<Book> sublist = this.bookServiceImpl.QueryByTypeid(typeid);
-		List<BookType> typeList = this.bookServiceImpl.findAllType(typeid);
-		model.addAttribute("sublist", sublist);
-		model.addAttribute("typeList", typeList);
-		return "liebiao";
-	}
-	
-	@RequestMapping("/findAllBookDetail")
-	public String findAllBookDetail(Model model,@RequestParam("bookid") int bookid) {
-		List<Bookdetail> detailList = this.bookServiceImpl.findAllBookDetail(bookid);
-		model.addAttribute("detailList", detailList);
-		return "xiangqing";
-	}
-	
-	@RequestMapping("/addShoppingcart")
-	public String findByBookid(Model model,HttpSession session,@RequestParam("bookid") int id) {
-		User user = (User) session.getAttribute("user");
-		this.bookServiceImpl.saveShopping(user, id);
-		
-		Set<Order> shoppingCartSet = (Set<Order>)session.getAttribute("shoppingcart");
-		session.setAttribute("shoppingCartSet", shoppingCartSet);
-		
-		int size = 0;
-		for(Order order : user.getOrderSet()) {
-			size = order.getOrderdetailSet().size();
-		}
-		session.setAttribute("size", size);
-		
-		for(Order order : user.getOrderSet()) {
-			double sum = 0;
-			for(Orderdetail od : order.getOrderdetailSet()) {
-				sum = sum + od.getTotalprice();
-			}
-			session.setAttribute("totalPrice",sum);
-		}
-		
-		return "redirect:list";
-	}
-	
-	@RequestMapping("/findByName")
-	public String selectBook(HttpSession session,@RequestParam("bookname") String bookname) {
-		List<Bookdetail> detailList = this.bookServiceImpl.findByName(bookname);
-		session.setAttribute("detailList", detailList);
-		return "xiangqing";
-	}
-	
-	@RequestMapping("/delete")
-	public String findByBookId(@RequestParam("orderdetailid") int orderdetailid,HttpSession session) {
-		User user = (User) session.getAttribute("user");
-		
-		Set<Order> orderSet = user.getOrderSet();
-		for(Order order:orderSet) {
-			for (Orderdetail od:order.getOrderdetailSet()) {
-				if(od.getOrderdetailid() == orderdetailid) {
-					order.getOrderdetailSet().remove(od);
-				}
-			}
-		}
-		
-		Orderdetail ord = this.bookServiceImpl.findByOrderDetailid(orderdetailid);
-		this.bookServiceImpl.deleteByOrderDetail(ord);
-		
-		Set<Order> shoppingCartSet = user.getOrderSet();
-		session.setAttribute("shoppingCartSet", shoppingCartSet);
-
-		int size = 0;
-		for(Order order : user.getOrderSet()) {
-			size = order.getOrderdetailSet().size();
-		}
-		session.setAttribute("size", size);
-		
-		for(Order order : user.getOrderSet()) {
-			double sum = 0;
-			for(Orderdetail od : order.getOrderdetailSet()) {
-				sum = sum + od.getTotalprice();
-			}
-			session.setAttribute("totalPrice",sum);
-		}
-		
-		return "gouwuche";
-	}
-	
-	@RequestMapping("/shopping")
-	public String findOrder(HttpSession session) {
-		User user = (User)session.getAttribute("user");
-		Set<Order> orderSet = user.getOrderSet();
-		session.setAttribute("shoppingCartSet", orderSet);
-		
-		int size = 0;
-		for(Order order : user.getOrderSet()) {
-			size = order.getOrderdetailSet().size();
-		}
-		session.setAttribute("size", size);
-		
-		for(Order order : user.getOrderSet()) {
-			double sum = 0;
-			for(Orderdetail od : order.getOrderdetailSet()) {
-				sum = sum + od.getTotalprice();
-			}
-			session.setAttribute("totalPrice",sum);
-		}
-		
-		return "gouwuche";
-	}
-	
-	@RequestMapping("/addBook")
-	public String addBooks(HttpSession session,@RequestParam("bookImg1") String bookImg1,@RequestParam("bookName") String bookName,
-			@RequestParam("bookType") String bookType,@RequestParam("bookIntroduce") String bookIntroduce,
-			@RequestParam("bookPrice") double bookPrice,@RequestParam("bookPublisher") String bookPublisher) {
-		Bookdetail bd = new Bookdetail();
-		
-		bd.setBookimg1(bookImg1);
-		bd.setBookname(bookName);
-		bd.setIntroduce(bookIntroduce);
-		bd.setBookprice(bookPrice);
-		bd.setBookpublisher(bookPublisher);
-		
-		this.bookServiceImpl.saveBooks(bd, bookType);
-		session.setAttribute("bd", bd);
-		
-		List<Bookdetail> detailList1 = this.bookServiceImpl.findAll1();
-		session.setAttribute("detailList1", detailList1);
-		return "adminList";
-	}
-	
-	@RequestMapping("adminDelete")
-	public String adminRemoveBooks(HttpSession session,@RequestParam("bookid") int bookid) {
-		this.bookServiceImpl.deletBooks(bookid);
-		
-		List<Bookdetail> detailList1 = this.bookServiceImpl.findAll1();
-		session.setAttribute("detailList1", detailList1);
-		
-		return "adminList";
-	}
-	
-	@RequestMapping("/updateBooks")
-	public String editBooks(HttpSession session,@RequestParam("bookName") String name,@RequestParam("bookimg1") String img1,@RequestParam("introduce") String introduce,
-			@RequestParam("bookType") int typeid,@RequestParam("bookPrice") double price,@RequestParam("bookPublisher") String publisher) {
-		Bookdetail bd = (Bookdetail) session.getAttribute("book");
-		
-		bd.setBookimg1(img1);
-		bd.setBookname(name);
-		bd.setIntroduce(introduce);
-		bd.setBookprice(price);
-		bd.setBookpublisher(publisher);
-		
-		this.bookServiceImpl.updateBooks(bd, typeid);
-		session.setAttribute("bd", bd);
-		
-		List<Bookdetail> detailList1 = this.bookServiceImpl.findAll1();
-		session.setAttribute("detailList1", detailList1);
-		return "adminList";
 	}
 }

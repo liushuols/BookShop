@@ -17,6 +17,10 @@ public class AdminLoginDaoImpl {
 	@Resource
 	private SessionFactory sessionFactory;
 	
+	/**
+	 * 查询数据库中的所有管理员
+	 * @return 管理员列表集合
+	 */
 	public List<Admin> findAllAdmin(){
 		Query q = this.sessionFactory.getCurrentSession().createQuery("from Admin");
 		return q.list();

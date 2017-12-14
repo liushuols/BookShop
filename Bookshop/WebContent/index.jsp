@@ -128,22 +128,18 @@
 					</li>
 				</ul>
 			</div>
-		
 		</div>	
 	<!-- end banner -->
 
 	<!-- start danpin -->
 		<c:forEach var="book" items="${list }" varStatus="status">
-		
 			<div class="mingxing f1">
 				<div class="sub_mingxing"><a href="<%=basePath %>book/findAllBookDetail?bookid=${book.id}" target="_blank"><img src="../${book.picture }" alt="无法显示该图片"></a></div>
 				<div class="aa" style="font-size:25px;margin-top:-10px;padding-left:20px;"><a href="<%=basePath %>book/findAllBookDetail?bookid=${book.id}" target="_blank">${book.name }</a></div>
 				<div class="youhui">${book.publisher }</div>
 				<div class="jiage">${book.price }</div>
-			</div>
-		
+			</div>	
 		</c:forEach>
-		
 		<div style="margin-left:500px">
 		<table class="fenye">
        <tr>

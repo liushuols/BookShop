@@ -55,7 +55,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         		<tr>                           
                         	</tbody>
                         </c:forEach>
-
                     </table>
                     
                 <div id="addModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="height:400px;">
@@ -65,7 +64,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
                 <form class="form-horizontal" action="<%=basePath %>book/addBook">
                 <div class="modal-body">
-                    
                     	<div class="control-group">
                             <label class="control-label" for="userName">图书图片</label>
                             <div class="controls">

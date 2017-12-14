@@ -10,7 +10,6 @@
 		<meta charset="UTF-8">
 		<title>用户注册</title>
 		<link rel="stylesheet" type="text/css" href="<%=basePath %>/css/login.css">
-
 	</head>
 	<body>
 		<form  method="post" action="user/saveuser">
@@ -33,7 +32,6 @@
 				<div class="regist_submit">
 					<input class="submit" type="submit" name="submit" value="立即注册" width="300">
 				</div>
-				
 			</div>
 		</div>
 		</form>

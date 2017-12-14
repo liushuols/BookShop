@@ -115,7 +115,6 @@
 					</li>
 				</ul>
 			</div>
-		
 		</div>	
 	<!-- end banner -->
 
@@ -135,8 +134,7 @@
 			</div>
 		</div>
 	</c:forEach>
-		
-
+	
 		<footer class="mt20 center" style="float:left">			
 			<div class="mt20"><a href="<%=basePath %>book/list">图书商城</a> | <a href="">预售</a> | <a href="">购物指南</a> | <a href="">配送方式</a> | 
 			<a href="">支付方式</a> | <a href="">售后服务</a> | <a href="">图书天猫店</a> | <a href="">图书淘宝直营店</a> | <a href="">图书网盟</a> | <a href="">隐私政策</a></div>
@@ -144,9 +142,7 @@
 			<div>违法和不良信息举报电话：185-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</div>
 
 		</footer>
-
 	<!-- end danpin -->
-
-
+	
 	</body>
 </html>

@@ -8,9 +8,7 @@
 	<%
 		String path = request.getContextPath();
 		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-		
 		Set<Order> shoppingCartSet = (Set<Order>)request.getSession().getAttribute("shoppingCartSet");
-		
 	%>
 	<head>
 		<meta charset="UTF-8">
@@ -30,7 +28,6 @@
 <!-- start banner_x -->
 		<div class="banner_x center">
 			<a href="<%=basePath %>book/list" target="_blank"><div class="logo fl"></div></a>
-			
 			<div class="wdgwc fl ml40">我的购物车</div>
 			<div class="wxts fl ml20">温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算</div>
 			<div class="dlzc fr">
@@ -41,12 +38,10 @@
 					<li>|</li>
 					<li><a href="<%=basePath%>exitLogin">退出登录</a></li>	
 				</ul>
-				
 			</div>
 			<div class="clear"></div>
 		</div>
 		<div class="xiantiao"></div>
-		
 		<div class="gwcxqbj">
 			<div class="gwcxd center">
 				<div class="top2 center">
@@ -71,7 +66,6 @@
 					<div style="width=50px;float:left;margin-left:140px">${o.bookcount }</div>
 					<div style="width=50px;float:left;margin-left:140px">${(o.bookprice)*(o.bookcount) }</div>
 					<div class="delete" style="width=50px;float:left;margin-left:145px"><a href="<%=basePath %>book/delete?orderdetailid=${o.orderdetailid}">删除</a></div>
-					
 				</div>
 				</c:forEach>
 				</c:forEach>
@@ -92,13 +86,8 @@
 				</div>
 				<div class="clear"></div>
 			</div>
-			
 		</div>
-		
 
-  
-
-	
 	<!-- footer -->
 	<footer class="center">
 			
@@ -107,6 +96,5 @@
 			<div>京ICP证110507号 京ICP备10046444号 京公网安备11010802020134号 京网文[2014]0059-0009号</div> 
 			<div>违法和不良信息举报电话：185-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</div>
 		</footer>
-
 	</body>
 </html>

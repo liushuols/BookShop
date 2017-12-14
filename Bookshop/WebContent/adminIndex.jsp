@@ -29,20 +29,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <ul class="dropdown-menu">
                     <li><a href="#">修改密码</a></li>
                 </ul>
-
             </li>
             <li>
                 <img src="<%=basePath %>/images/32/200.png" />&nbsp;&nbsp;<a class="loginout" href="<%=basePath%>exitLogin">退出</a>
             </li>
-
         </ul>
-
-
     </div>
-
-
     <div class="nav">
-
         <ul class="breadcrumb">
             <li>
                 <img src="<%=basePath %>/images/32/5025_networking.png" />
@@ -51,9 +44,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <li class="active"></li>
         </ul>
     </div>
-
-
-
     <div class="container-fluid content">
         <div class="row-fluid">
             <div class="span2 content-left">
@@ -75,19 +65,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                 <img class="left-icon-child" src="<%=basePath %>/images/32/8.png" /><span class="left-body"> 添加图书 </span>
                                 </a>
                             </div>
-                            
                             <div class="accordion-inner">
                             	<a href="<%=basePath %>/../selectkind.do">
                                 <img class="left-icon-child" src="<%=basePath %>/images/32/612.png" /><span class="left-body"> 类别管理</span>
                                 </a>
                             </div>
-                      
                         </div>
                     </div>
                 </div>
-
             </div>
-
             <div class="span10 content-right">
                 <iframe src="<%=basePath %>adminList.jsp" class="iframe"></iframe>
             </div>
@@ -100,6 +86,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="<%=basePath %>/scripts/Index.js"></script>
 	<div style="text-align:center;">
 </div>
-
 </body>
 </html>

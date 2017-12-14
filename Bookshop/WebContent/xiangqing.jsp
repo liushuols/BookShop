@@ -8,7 +8,6 @@
 	<%
 		String path = request.getContextPath();
 		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-		
 		List<Bookdetail> detailList1 = (List<Bookdetail>)request.getSession().getAttribute("detailList");
 	%>
 	<head>
@@ -146,9 +145,7 @@
 			<div class="clear"></div>
 		</div>	
 	</div>
-	
 	<div class="jieshao mt20 w" style="height:630px;">
-		
 		<div class="col-md-4 single-grid">		
 			<div class="flexslider">
 				<ul class="slides">
@@ -190,7 +187,6 @@
 			<div class="xiadan ml20 mt20" style="margin-left:100px;">
 					<input class="jrgwc"  type="button" name="jrgwc" value="立即选购" />
 					<input class="jrgwc" type="submit" name="jrgwc" value="加入购物车" />
-				
 			</div>
 		</div>
 		<div class="clear"></div>
@@ -199,13 +195,10 @@
 	</c:forEach>
 	<!-- footer -->
 	<footer class="mt20 center">
-			
 			<div class="mt20"><a href="<%=basePath %>book/list">图书商城</a> | <a href="">预售</a> | <a href="">购物指南</a> | <a href="">配送方式</a> | 
 			<a href="">支付方式</a> | <a href="">售后服务</a> | <a href="">图书天猫店</a> | <a href="">图书淘宝直营店</a> | <a href="">图书网盟</a> | <a href="">隐私政策</a></div>
 			<div>京ICP证110507号 京ICP备10046444号 京公网安备11010802020134号 京网文[2014]0059-0009号</div> 
 			<div>违法和不良信息举报电话：185-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</div>
-
 		</footer>
-
 	</body>
 </html>

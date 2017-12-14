@@ -19,7 +19,7 @@
 <body>
 	<div class="container-fluid">
         <div class="row-fluid">
-            <h4>数据列表</h4>
+            <h4>图书信息列表</h4>
             <div class="w">
                 <div class="span12">
               		<form action="<%=basePath %>book/updateBooks"  method="post" enctype="multipart/form-data">
@@ -29,7 +29,6 @@
                                 <th>书名</th>
                                 <th>图片</th>
                             </tr>
-
                         </thead>
                         <tbody id="tbody">
                             <tr align="center">
@@ -37,7 +36,6 @@
                         		<th> <input type="text" name="bookimg1" value="${book.bookimg1 }"> </th>
                        		<tr> 
                         </tbody>
-                        
                     </table>
                     
                     <table class="table table-condensed table-bordered table-hover tab" >
@@ -49,7 +47,6 @@
                                 <th>出版社</th>
                                 <th>操作</th>
                             </tr>
-
                         </thead>
                         <tbody id="tbody">
                             <tr align="center">
@@ -72,8 +69,7 @@
                         		<th> <input type="text" name="bookPublisher" value="${book.bookpublisher }"> </th>
                         		<th> <input type="submit" value="修改图书"></th>
                        		<tr> 
-                        </tbody>
-                        
+                        </tbody>  
                     </table>
                     </form>
                     <div id="page" class="tr"></div>

@@ -25,7 +25,6 @@ public class User {
 	private String address;
 	private String email;
 	private Set<Order> orderSet = new HashSet<Order>();
-	private Set<Log> logSet = new HashSet<Log>();
 	private Cart shoppingcart;
 	
 	@Id
@@ -73,14 +72,6 @@ public class User {
 	}
 	public void setOrderSet(Set<Order> orderSet) {
 		this.orderSet = orderSet;
-	}
-	
-	@OneToMany(mappedBy="user", targetEntity=Log.class, cascade=CascadeType.MERGE, fetch = FetchType.LAZY)
-	public Set<Log> getLogSet() {
-		return logSet;
-	}
-	public void setLogSet(Set<Log> logSet) {
-		this.logSet = logSet;
 	}
 	
 	@OneToOne(mappedBy="user")
